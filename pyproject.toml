@@ -1,0 +1,83 @@
+[tool.poetry]
+name = "mindforge-dankoe"
+version = "0.1.0"
+description = "MindForge AI - Dan Koe Style Content Generation System"
+authors = ["MindForge Team"]
+readme = "README.md"
+packages = [{include = "mindforge_dankoe"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+# Core LLM
+litellm = "^1.30.0"
+openai = "^1.12.0"
+
+# Web Crawling & Processing
+scrapy = "^2.11.0"
+beautifulsoup4 = "^4.12.3"
+playwright = "^1.41.0"
+trafilatura = "^1.8.0"
+newspaper3k = "^0.2.8"
+httpx = "^0.27.0"
+aiohttp = "^3.9.3"
+
+# Analysis & Processing
+spacy = "^3.7.4"
+jieba = "^0.42.1"
+scikit-learn = "^1.4.0"
+chromadb = "^0.4.22"
+numpy = "^1.26.4"
+pandas = "^2.2.0"
+
+# API & Interface
+fastapi = "^0.109.0"
+uvicorn = "^0.27.0"
+pydantic = "^2.6.0"
+pydantic-settings = "^2.1.0"
+
+# Utilities
+python-dotenv = "^1.0.1"
+loguru = "^0.7.2"
+rich = "^13.7.0"
+typer = "^0.9.0"
+tqdm = "^4.66.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.4"
+pytest-cov = "^4.1.0"
+black = "^24.1.1"
+isort = "^5.13.2"
+mypy = "^1.8.0"
+ruff = "^0.2.0"
+ipython = "^8.21.0"
+jupyterlab = "^4.1.0"
+
+[tool.poetry.scripts]
+mindforge = "mindforge_dankoe.cli:app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
