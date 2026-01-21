@@ -12,7 +12,7 @@ Provides commands for:
 import asyncio
 import json
 from pathlib import Path
-from typing import Optional
+from typing import Annotated, Optional
 
 import typer
 from rich.console import Console
@@ -33,9 +33,9 @@ console = Console()
 
 @app.command()
 def crawl(
-    max_articles: int = typer.Option(50, "--max", help="Maximum articles to crawl"),
-    delay: float = typer.Option(2.0, "--delay", help="Delay between requests in seconds"),
-    output_dir: Optional[str] = typer.Option(None, "--output", help="Output directory"),
+    max_articles: Annotated[int, typer.Option(help="Maximum articles to crawl")] = 50,
+    delay: Annotated[float, typer.Option(help="Delay between requests in seconds")] = 2.0,
+    output_dir: Annotated[Optional[str], typer.Option(help="Output directory")] = None,
 ):
     """Crawl Dan Koe's newsletter articles."""
     from mindforge_dankoe.crawler.dankoe_spider import DanKoeSpider
@@ -84,8 +84,8 @@ def crawl(
 
 @app.command()
 def process(
-    input_dir: Optional[str] = typer.Option(None, "--input", help="Input directory with raw articles"),
-    output_dir: Optional[str] = typer.Option(None, "--output", help="Output directory"),
+    input_dir: Annotated[Optional[str], typer.Option(help="Input directory with raw articles")] = None,
+    output_dir: Annotated[Optional[str], typer.Option(help="Output directory")] = None,
 ):
     """Process crawled articles for analysis."""
     from mindforge_dankoe.crawler.article_processor import ArticleProcessor
@@ -114,7 +114,7 @@ def process(
 
 @app.command()
 def analyze(
-    output_file: Optional[str] = typer.Option(None, "--output", help="Output file for analysis"),
+    output_file: Annotated[Optional[str], typer.Option(help="Output file for analysis")] = None,
 ):
     """Analyze articles for style and thinking patterns."""
     from mindforge_dankoe.analysis.style_analyzer import StyleAnalyzer
@@ -160,11 +160,11 @@ def analyze(
 
 @app.command()
 def generate(
-    topic: str = typer.Argument(..., help="Topic to write about"),
-    language: str = typer.Option("en", "--lang", help="Target language (en/zh)"),
-    words: int = typer.Option(1500, "--words", help="Target word count"),
-    output_file: Optional[str] = typer.Option(None, "--output", help="Output file"),
-    research: bool = typer.Option(True, "--research/--no-research", help="Conduct web research"),
+    topic: Annotated[str, typer.Argument(help="Topic to write about")],
+    language: Annotated[str, typer.Option(help="Target language (en/zh)")] = "en",
+    words: Annotated[int, typer.Option(help="Target word count")] = 1500,
+    output_file: Annotated[Optional[str], typer.Option(help="Output file")] = None,
+    research: Annotated[bool, typer.Option(help="Conduct web research")] = True,
 ):
     """Generate an article on a topic in Dan Koe's style."""
     from mindforge_dankoe.analysis.style_analyzer import StyleAnalyzer
@@ -238,8 +238,8 @@ def generate(
 
 @app.command()
 def evaluate(
-    article_path: str = typer.Argument(..., help="Path to article JSON file"),
-    detailed: bool = typer.Option(False, "--detailed", help="Show detailed analysis"),
+    article_path: Annotated[str, typer.Argument(help="Path to article JSON file")],
+    detailed: Annotated[bool, typer.Option(help="Show detailed analysis")] = False,
 ):
     """Evaluate a generated article for quality and similarity."""
     from mindforge_dankoe.evaluation.creativity_scorer import CreativityScorer
