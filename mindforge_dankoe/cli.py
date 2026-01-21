@@ -33,9 +33,9 @@ console = Console()
 
 @app.command()
 def crawl(
-    max_articles: int = typer.Option(50, "--max", "-m", help="Maximum articles to crawl"),
-    delay: float = typer.Option(2.0, "--delay", "-d", help="Delay between requests in seconds"),
-    output_dir: Optional[str] = typer.Option(None, "--output", "-o", help="Output directory"),
+    max_articles: int = typer.Option(50, "--max", help="Maximum articles to crawl"),
+    delay: float = typer.Option(2.0, "--delay", help="Delay between requests in seconds"),
+    output_dir: Optional[str] = typer.Option(None, "--output", help="Output directory"),
 ):
     """Crawl Dan Koe's newsletter articles."""
     from mindforge_dankoe.crawler.dankoe_spider import DanKoeSpider
@@ -84,8 +84,8 @@ def crawl(
 
 @app.command()
 def process(
-    input_dir: Optional[str] = typer.Option(None, "--input", "-i", help="Input directory with raw articles"),
-    output_dir: Optional[str] = typer.Option(None, "--output", "-o", help="Output directory"),
+    input_dir: Optional[str] = typer.Option(None, "--input", help="Input directory with raw articles"),
+    output_dir: Optional[str] = typer.Option(None, "--output", help="Output directory"),
 ):
     """Process crawled articles for analysis."""
     from mindforge_dankoe.crawler.article_processor import ArticleProcessor
@@ -114,7 +114,7 @@ def process(
 
 @app.command()
 def analyze(
-    output_file: Optional[str] = typer.Option(None, "--output", "-o", help="Output file for analysis"),
+    output_file: Optional[str] = typer.Option(None, "--output", help="Output file for analysis"),
 ):
     """Analyze articles for style and thinking patterns."""
     from mindforge_dankoe.analysis.style_analyzer import StyleAnalyzer
@@ -161,9 +161,9 @@ def analyze(
 @app.command()
 def generate(
     topic: str = typer.Argument(..., help="Topic to write about"),
-    language: str = typer.Option("en", "--lang", "-l", help="Target language (en/zh)"),
-    words: int = typer.Option(1500, "--words", "-w", help="Target word count"),
-    output_file: Optional[str] = typer.Option(None, "--output", "-o", help="Output file"),
+    language: str = typer.Option("en", "--lang", help="Target language (en/zh)"),
+    words: int = typer.Option(1500, "--words", help="Target word count"),
+    output_file: Optional[str] = typer.Option(None, "--output", help="Output file"),
     research: bool = typer.Option(True, "--research/--no-research", help="Conduct web research"),
 ):
     """Generate an article on a topic in Dan Koe's style."""
@@ -239,7 +239,7 @@ def generate(
 @app.command()
 def evaluate(
     article_path: str = typer.Argument(..., help="Path to article JSON file"),
-    detailed: bool = typer.Option(False, "--detailed", "-d", help="Show detailed analysis"),
+    detailed: bool = typer.Option(False, "--detailed", help="Show detailed analysis"),
 ):
     """Evaluate a generated article for quality and similarity."""
     from mindforge_dankoe.evaluation.creativity_scorer import CreativityScorer
